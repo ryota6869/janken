@@ -9,16 +9,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/lec02.html")
+
 public class lec02Controller {
-  @GetMapping
+  @GetMapping("/lec02")
   public String lec02() {
     return "lec02.html";
   }
 
-  @PostMapping
+  @PostMapping("/lec02")
   public String lec02(@RequestParam String name, ModelMap model) {
     model.addAttribute("name", name);
+    return "lec02.html";
+  }
+
+  @GetMapping("/lec02janken")
+  public String jankenResalut(@RequestParam String hand, ModelMap model) {
+    if(hand.equals("Gu")){
+      model.addAttribute("result", "draw");
+    } else if (hand.equals("Tyoki")) {
+      model.addAttribute("result", "You lose...");
+    } else if (hand.equals("Pa")) {
+      model.addAttribute("result", "You win!");
+    }
+    model.addAttribute("hand", hand);
     return "lec02.html";
   }
 }
