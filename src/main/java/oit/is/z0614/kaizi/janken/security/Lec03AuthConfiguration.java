@@ -41,10 +41,8 @@ public class Lec03AuthConfiguration extends WebSecurityConfigurerAdapter{
   protected void configure(HttpSecurity http) throws Exception {
     // Spring Securityのフォームを利用してログインを行う
     http.formLogin();
-    // http://localhost:8000/sample3 で始まるURLへのアクセスはログインが必要
-    // antMatchers().authenticated がantMatchersへのアクセスに認証を行うことを示す
-    // antMatchers()の他にanyRequest()と書くとあらゆるアクセス先を表現できる
-    // authenticated()の代わりにpermitAll()と書くと認証処理が不要であることを示す
+    // http://localhost:8080/lec02 で始まるURLへのアクセスはログインが必要
     http.authorizeRequests().antMatchers("/lec02/**").authenticated();
+    
   }
 }
