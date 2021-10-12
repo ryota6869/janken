@@ -46,7 +46,5 @@ public class Lec03AuthConfiguration extends WebSecurityConfigurerAdapter{
     // antMatchers()の他にanyRequest()と書くとあらゆるアクセス先を表現できる
     // authenticated()の代わりにpermitAll()と書くと認証処理が不要であることを示す
     http.authorizeRequests().antMatchers("/lec02/**").authenticated();
-    // Spring Securityの機能を利用してログアウト．ログアウト時は http://localhost:8000/ に戻る
-    http.logout().logoutSuccessUrl("/");
   }
 }
