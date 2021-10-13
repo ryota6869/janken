@@ -20,10 +20,10 @@
   </div>
 
   <a href="/lec02janken?hand=Gu">ぐー</a> <a href="/lec02janken?hand=Tyoki">ちょき</a> <a href="/lec02janken?hand=Pa">ぱー</a>
-  <div th:if="${hand}">
-    あなたの手 [[${hand}]]<br>
-    相手の手 Gu<br>
-    結果 [[${result}]]<br>
+  <div th:if="${janken}">
+    あなたの手 [[${janken.playerHand}]]<br>
+    相手の手 [[${janken.cpuHand}]]<br>
+    結果 [[${janken.result}]]<br>
   </div>
 
 
