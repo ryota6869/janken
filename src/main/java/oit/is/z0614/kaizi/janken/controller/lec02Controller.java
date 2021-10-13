@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import oit.is.z0614.kaizi.janken.model.Entry;
+import oit.is.z0614.kaizi.janken.model.Janken;
 
 @Controller
 
@@ -32,17 +33,11 @@ public class lec02Controller {
   @GetMapping("/lec02janken")
   public String jankenResalut(@RequestParam String hand, ModelMap model, Principal prin) {
     String loginUser = prin.getName();
+    Janken janken = new Janken(hand);
+
     this.entry.addUser(loginUser);
     model.addAttribute("users", this.entry.getUsers());
-
-    if(hand.equals("Gu")){
-      model.addAttribute("result", "draw");
-    } else if (hand.equals("Tyoki")) {
-      model.addAttribute("result", "You lose...");
-    } else if (hand.equals("Pa")) {
-      model.addAttribute("result", "You win!");
-    }
-    model.addAttribute("hand", hand);
+    model.addAttribute("janken", janken);
     return "lec02.html";
   }
 }
