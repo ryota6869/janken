@@ -32,7 +32,7 @@ public class Janken {
     if (playerHand.equals(cpuHand)) {
       this.result = "draw";
     } else if ((playerHand.equals("Gu") && cpuHand.equals("Tyoki"))
-        || (playerHand.equals("Tyuki") && cpuHand.equals("Pa"))
+        || (playerHand.equals("Tyoki") && cpuHand.equals("Pa"))
         || ((playerHand.equals("Pa") && cpuHand.equals("Gu")))) {
       this.result = "You win!";
     } else if ((playerHand.equals("Gu") && cpuHand.equals("Pa"))
