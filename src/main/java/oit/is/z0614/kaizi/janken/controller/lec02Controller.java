@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import oit.is.z0614.kaizi.janken.model.Entry;
 import oit.is.z0614.kaizi.janken.model.Janken;
+import oit.is.z0614.kaizi.janken.model.Match;
+import oit.is.z0614.kaizi.janken.model.MatchMapper;
 import oit.is.z0614.kaizi.janken.model.User;
 import oit.is.z0614.kaizi.janken.model.UserMappaer;
 
@@ -22,6 +24,9 @@ public class lec02Controller {
 
   @Autowired
   UserMappaer userMappaer;
+
+  @Autowired
+  MatchMapper matchMapper;
 
   @GetMapping("/lec02")
   public String lec02(Principal principal, ModelMap model) {
@@ -40,6 +45,8 @@ public class lec02Controller {
     model.addAttribute("entry", this.entry);
     ArrayList<User> users = userMappaer.selectAllUsers();
     model.addAttribute("users", users);
+    ArrayList<Match> matchs = matchMapper.selectAllMatches();
+    model.addAttribute("matchs", matchs);
     return "lec02.html";
   }
 }
