@@ -1,14 +1,24 @@
 package oit.is.z0614.kaizi.janken.model;
 
 public class User {
-  String user;
+  int id;
+  String name;
 
-  public String getUser() {
-    return user;
+
+  public String getName() {
+    return name;
   }
 
-  public void setUser(String user) {
-    this.user = user;
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
 }
