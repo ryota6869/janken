@@ -12,4 +12,7 @@ import oit.is.z0614.kaizi.janken.model.User;
 public interface UserMappaer {
   @Select("select * from users;")
   ArrayList<User> selectAllUsers();
+
+  @Select("select * from users where id = #{id}")
+  User selectByid(Integer id);
 }

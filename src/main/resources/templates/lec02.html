@@ -16,10 +16,10 @@
   <br>
 
   <div th:if="${users}">
-    <div th:each="user,stat:${users}">
-      ID : [[${user.id}]]<br>
+    <li th:each="user,stat:${users}"><a th:href="@{/match(id=${user.id})}">
+      ID : [[${user.id}]]
       ユーザー名 : [[${user.name}]]
-    </div>
+    </a></li>
   </div>
   <br>
 
