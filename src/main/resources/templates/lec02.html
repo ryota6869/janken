@@ -33,7 +33,18 @@
     相手の手 [[${janken.cpuHand}]]<br>
     結果 [[${janken.result}]]<br>
   </div>
+  <br>
 
+  <div th:if="${matchs}">
+    <div th:each="match,stat:${matchs}">
+      ID : [[${match.id}]]<br>
+      ユーザー1 : [[${match.user1}]]<br>
+      ユーザー1 : [[${match.user2}]]<br>
+      ユーザー1の手 : [[${match.user1Hand}]]<br>
+      ユーザー2の手 : [[${match.user2Hand}]]<br>
+    </div>
+  </div>
+  <br>
 
 </body>
 
