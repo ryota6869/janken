@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +19,7 @@ import oit.is.z0614.kaizi.janken.model.UserMappaer;
 
 @Controller
 
-public class lec02Controller {
+public class Lec02Controller {
   @Autowired
   private Entry entry;
 
@@ -38,6 +39,7 @@ public class lec02Controller {
   }
 
   @GetMapping("/lec02janken")
+  @Transactional
   public String jankenResalut(@RequestParam String hand, ModelMap model) {
 
     Janken janken = new Janken(hand);
@@ -49,4 +51,14 @@ public class lec02Controller {
     model.addAttribute("matchs", matchs);
     return "lec02.html";
   }
+
+  @GetMapping("/match")
+  @Transactional
+  public String match(@RequestParam Integer id, Principal prin, ModelMap model){
+    User user = userMappaer.selectByid(id);
+    model.addAttribute("login_user", prin.getName());
+    model.addAttribute("user", user);
+    return "match.html";
+  }
+
 }
