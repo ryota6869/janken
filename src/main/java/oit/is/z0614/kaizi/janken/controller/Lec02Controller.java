@@ -33,6 +33,10 @@ public class Lec02Controller {
   public String lec02(Principal principal, ModelMap model) {
     String loginUser = principal.getName();
     this.entry.addUser(loginUser);
+    ArrayList<User> users = userMappaer.selectAllUsers();
+    model.addAttribute("users", users);
+    ArrayList<Match> matchs = matchMapper.selectAllMatches();
+    model.addAttribute("matchs", matchs);
     model.addAttribute("entry", this.entry);
     model.addAttribute("loginUser", loginUser);
     return "lec02.html";
@@ -65,6 +69,7 @@ public class Lec02Controller {
   public String rematch(@RequestParam Integer id, @RequestParam String hand, Principal prin, ModelMap model) {
     Janken janken = new Janken(hand);
     User user = userMappaer.selectByid(id);
+    matchMapper.insertMatch(janken);
     model.addAttribute("login_user", prin.getName());
     model.addAttribute("user", user);
     model.addAttribute("janken", janken);
