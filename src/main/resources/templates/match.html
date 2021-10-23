@@ -10,7 +10,18 @@
   自分の名前：[[${login_user}]]<br>
   相手の名前：[[${user.name}]]<br>
 
+  <br>
+  <a th:href="@{/rematch(id=${user.id},hand=Gu)}">ぐー</a>
+  <a th:href="@{/rematch(id=${user.id},hand=Tyoki)}">ちょき</a>
+  <a th:href="@{/rematch(id=${user.id},hand=Pa)}">ぱー</a>
+  <div th:if="${janken}">
+    あなたの手 [[${janken.playerHand}]]<br>
+    相手の手 [[${janken.cpuHand}]]<br>
+    結果 [[${janken.result}]]<br>
+  </div>
+  <br>
 
+  <br><a href="/lec02">もどる</a>
 </body>
 
 </html>

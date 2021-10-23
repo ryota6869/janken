@@ -41,7 +41,6 @@ public class Lec02Controller {
   @GetMapping("/lec02janken")
   @Transactional
   public String jankenResalut(@RequestParam String hand, ModelMap model) {
-
     Janken janken = new Janken(hand);
     model.addAttribute("janken", janken);
     model.addAttribute("entry", this.entry);
@@ -58,6 +57,17 @@ public class Lec02Controller {
     User user = userMappaer.selectByid(id);
     model.addAttribute("login_user", prin.getName());
     model.addAttribute("user", user);
+    return "match.html";
+  }
+
+  @GetMapping("/rematch")
+  @Transactional
+  public String rematch(@RequestParam Integer id, @RequestParam String hand, Principal prin, ModelMap model) {
+    Janken janken = new Janken(hand);
+    User user = userMappaer.selectByid(id);
+    model.addAttribute("login_user", prin.getName());
+    model.addAttribute("user", user);
+    model.addAttribute("janken", janken);
     return "match.html";
   }
 
