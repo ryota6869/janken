@@ -68,8 +68,13 @@ public class Lec02Controller {
   @Transactional
   public String rematch(@RequestParam Integer id, @RequestParam String hand, Principal prin, ModelMap model) {
     Janken janken = new Janken(hand);
+    Match match = new Match();
+    match.setUser1(2);
+    match.setUser2(id);
+    match.setUser1Hand(janken.getPlayerHand());
+    match.setUser2Hand(janken.getCpuHand());
     User user = userMappaer.selectByid(id);
-    matchMapper.insertMatch(janken);
+    matchMapper.insertMatch(match);
     model.addAttribute("login_user", prin.getName());
     model.addAttribute("user", user);
     model.addAttribute("janken", janken);
