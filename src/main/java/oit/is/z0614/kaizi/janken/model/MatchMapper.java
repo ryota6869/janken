@@ -12,6 +12,6 @@ public interface MatchMapper {
   @Select("select * from matches;")
   ArrayList<Match> selectAllMatches();
 
-  @Insert("insert into matches (user1,user2,user1Hand,user2Hand) VALUES (2,1,#{playerHand},#{cpuHand});")
-  void insertMatch(Janken janken);
+  @Insert("insert into matches (user1,user2,user1Hand,user2Hand) VALUES (#{user1},#{user2},#{user1Hand},#{user2Hand});")
+  void insertMatch(Match match);
 }
