@@ -9,31 +9,22 @@
 <body>
   <div><a href="/logout">ログアウト</a></div><br>
 
-  <font size="5">Lec02 GET!</font><br><br>
+  <b><font size="5">Lec02 GET!</font><br><br></b>
 
-  エントリー<br>
-  <li th:each="user : ${entry.users}">[[${user}]]<br></li>
+  <div th:if="${loginUser}">
+    Hi! [[${loginUser}]]
+  </div>
   <br>
+  <b><font size="5">エントリー</font><br><br></b>
 
   <div th:if="${users}">
     <li th:each="user,stat:${users}"><a th:href="@{/match(id=${user.id})}">
-      ID : [[${user.id}]]
-      ユーザー名 : [[${user.name}]]
+      [[${user.name}]]
     </a></li>
   </div>
   <br>
 
-  <div th:if="${loginUser}">
-    Hi! [[${loginUser}]]<br>
-  </div>
-
-  <a href="/lec02janken?hand=Gu">ぐー</a> <a href="/lec02janken?hand=Tyoki">ちょき</a> <a href="/lec02janken?hand=Pa">ぱー</a>
-  <div th:if="${janken}">
-    あなたの手 [[${janken.playerHand}]]<br>
-    相手の手 [[${janken.cpuHand}]]<br>
-    結果 [[${janken.result}]]<br>
-  </div>
-  <br>
+  <b><font size="5">試合結果</font><br><br></b>
 
   <div th:if="${matchs}">
     <div th:each="match,stat:${matchs}">
@@ -42,6 +33,7 @@
       ユーザー2 : [[${match.user2}]]<br>
       ユーザー1の手 : [[${match.user1Hand}]]<br>
       ユーザー2の手 : [[${match.user2Hand}]]<br>
+      <br>
     </div>
   </div>
   <br>
