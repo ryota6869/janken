@@ -16,9 +16,9 @@
   </b>
 
   <br>
-  <a th:href="@{/rematch(id=${user.id},hand=Gu)}">ぐー</a>
-  <a th:href="@{/rematch(id=${user.id},hand=Tyoki)}">ちょき</a>
-  <a th:href="@{/rematch(id=${user.id},hand=Pa)}">ぱー</a>
+  <a th:href="@{/wait(id=${user.id},hand=Gu)}">ぐー</a>
+  <a th:href="@{/wait(id=${user.id},hand=Tyoki)}">ちょき</a>
+  <a th:href="@{/wait(id=${user.id},hand=Pa)}">ぱー</a>
   <div th:if="${janken}">
     あなたの手 [[${janken.playerHand}]]<br>
     相手の手 [[${janken.cpuHand}]]<br>
