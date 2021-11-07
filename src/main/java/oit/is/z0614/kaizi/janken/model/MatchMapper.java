@@ -12,6 +12,9 @@ public interface MatchMapper {
   @Select("select * from matches;")
   ArrayList<Match> selectAllMatches();
 
-  @Insert("insert into matches (user1,user2,user1Hand,user2Hand) VALUES (#{user1},#{user2},#{user1Hand},#{user2Hand});")
+  @Select("select * from matches where isactive = true")
+  Match selectActiveTrueMatch();
+
+  @Insert("insert into matches (user1,user2,user1Hand,user2Hand,isactive) VALUES (#{user1},#{user2},#{user1Hand},#{user2Hand},#{isActive});")
   void insertMatch(Match match);
 }

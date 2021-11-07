@@ -4,11 +4,13 @@ import java.security.Principal;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import oit.is.z0614.kaizi.janken.model.Entry;
 import oit.is.z0614.kaizi.janken.model.Janken;
@@ -16,6 +18,7 @@ import oit.is.z0614.kaizi.janken.model.Match;
 import oit.is.z0614.kaizi.janken.model.MatchMapper;
 import oit.is.z0614.kaizi.janken.model.User;
 import oit.is.z0614.kaizi.janken.model.UserMappaer;
+import oit.is.z0614.kaizi.janken.service.AsyncKekka;
 import oit.is.z0614.kaizi.janken.model.MatchInfo;
 import oit.is.z0614.kaizi.janken.model.MatchInfoMapper;
 
@@ -33,6 +36,9 @@ public class Lec02Controller {
 
   @Autowired
   MatchInfoMapper matchInfoMapper;
+
+  @Autowired
+  private AsyncKekka acKekka;
 
   @GetMapping("/lec02")
   public String lec02(Principal principal, ModelMap model) {
@@ -71,33 +77,37 @@ public class Lec02Controller {
     return "match.html";
   }
 
-  @GetMapping("/rematch")
-  @Transactional
-  public String rematch(@RequestParam Integer id, @RequestParam String hand, Principal prin, ModelMap model) {
-    Janken janken = new Janken(hand);
-    Match match = new Match();
-    match.setUser1(2);
-    match.setUser2(id);
-    match.setUser1Hand(janken.getPlayerHand());
-    match.setUser2Hand(janken.getCpuHand());
-    User user = userMappaer.selectByid(id);
-    matchMapper.insertMatch(match);
-    model.addAttribute("login_user", prin.getName());
-    model.addAttribute("user", user);
-    model.addAttribute("janken", janken);
-    return "match.html";
-  }
-
   @GetMapping("/wait")
   @Transactional
   public String wait(@RequestParam Integer id, @RequestParam String hand, Principal prin, ModelMap model) {
     MatchInfo mInfo = new MatchInfo();
+    ArrayList<MatchInfo> mInfos = matchInfoMapper.selectTrueMatchinfo();
+    Match match = new Match();
+    boolean matchingFlag = false;
 
     model.addAttribute("login_user", prin.getName());
     User player = userMappaer.selectByName(prin.getName());
     User othUser = userMappaer.selectByid(id);
-    mInfo.setAllData(player, othUser, hand);
-    matchInfoMapper.insertMatchInfo(mInfo);
+
+    for (MatchInfo mi : mInfos) {
+      if (mi.getUser1() == othUser.getId() && mi.getUser2() == player.getId()) {
+        match.setAllData(player, othUser, hand, mi.getUser1Hand());
+        matchMapper.insertMatch(match);
+        matchingFlag = true;
+        break;
+      }
+    }
+    if (matchingFlag == false) {
+      mInfo.setAllData(player, othUser, hand);
+      matchInfoMapper.insertMatchInfo(mInfo);
+    }
     return "wait.html";
+  }
+
+  @GetMapping("/result")
+  public SseEmitter showResult() {
+    final SseEmitter sseEmitter = new SseEmitter();
+        this.acKekka.asnyShowMatchResult(sseEmitter);
+        return sseEmitter;
   }
 }
