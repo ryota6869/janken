@@ -16,6 +16,8 @@ import oit.is.z0614.kaizi.janken.model.Match;
 import oit.is.z0614.kaizi.janken.model.MatchMapper;
 import oit.is.z0614.kaizi.janken.model.User;
 import oit.is.z0614.kaizi.janken.model.UserMappaer;
+import oit.is.z0614.kaizi.janken.model.MatchInfo;
+import oit.is.z0614.kaizi.janken.model.MatchInfoMapper;
 
 @Controller
 
@@ -28,6 +30,9 @@ public class Lec02Controller {
 
   @Autowired
   MatchMapper matchMapper;
+
+  @Autowired
+  MatchInfoMapper matchInfoMapper;
 
   @GetMapping("/lec02")
   public String lec02(Principal principal, ModelMap model) {
@@ -81,4 +86,14 @@ public class Lec02Controller {
     return "match.html";
   }
 
+  @GetMapping("/wait")
+  @Transactional
+  public String wait(@RequestParam Integer id, @RequestParam String hand, Principal prin, ModelMap model) {
+    model.addAttribute("login_user", prin.getName());
+    User player = userMappaer.selectByName(prin.getName());
+    User othUser = userMappaer.selectByid(id);
+    MatchInfo mInfo = new MatchInfo(player, othUser, hand);
+    matchInfoMapper.insertMatchInfo(mInfo);
+    return "wait.html";
+  }
 }

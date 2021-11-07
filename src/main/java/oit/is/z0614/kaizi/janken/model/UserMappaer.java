@@ -15,4 +15,7 @@ public interface UserMappaer {
 
   @Select("select * from users where id = #{id}")
   User selectByid(Integer id);
+
+  @Select("select * from users where name = #{name}")
+  User selectByName(String name);
 }
