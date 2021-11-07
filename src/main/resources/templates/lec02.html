@@ -9,22 +9,41 @@
 <body>
   <div><a href="/logout">ログアウト</a></div><br>
 
-  <b><font size="5">Lec02 GET!</font><br><br></b>
+  <b>
+    <font size="5">Lec02 GET!</font><br><br>
+  </b>
 
   <div th:if="${loginUser}">
     Hi! [[${loginUser}]]
   </div>
   <br>
-  <b><font size="5">エントリー</font><br><br></b>
+  <b>
+    <font size="5">エントリー</font><br><br>
+  </b>
 
   <div th:if="${users}">
     <li th:each="user,stat:${users}"><a th:href="@{/match(id=${user.id})}">
-      [[${user.name}]]
-    </a></li>
+        [[${user.name}]]
+      </a></li>
   </div>
   <br>
 
-  <b><font size="5">試合結果</font><br><br></b>
+  <b>
+    <font size="5">アクティブな試合</font><br><br>
+  </b>
+  <div th:if="${mInfos}">
+    <li th:each="mInfo,stat:${mInfos}">
+      ID:[[${mInfo.id}]]
+      ユーザー1(ID):[[${mInfo.user1}]]
+      ユーザー2(ID):[[${mInfo.user2}]]
+      isActive:[[${mInfo.isActive}]]
+    </li>
+  </div>
+
+  <br><br>
+  <b>
+    <font size="5">試合結果</font><br><br>
+  </b>
 
   <div th:if="${matchs}">
     <div th:each="match,stat:${matchs}">

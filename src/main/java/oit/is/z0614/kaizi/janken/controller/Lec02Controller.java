@@ -41,6 +41,8 @@ public class Lec02Controller {
     ArrayList<User> users = userMappaer.selectAllUsers();
     model.addAttribute("users", users);
     ArrayList<Match> matchs = matchMapper.selectAllMatches();
+    ArrayList<MatchInfo> mInfos = matchInfoMapper.selectTrueMatchinfo();
+    model.addAttribute("mInfos", mInfos);
     model.addAttribute("matchs", matchs);
     model.addAttribute("entry", this.entry);
     model.addAttribute("loginUser", loginUser);
@@ -89,10 +91,12 @@ public class Lec02Controller {
   @GetMapping("/wait")
   @Transactional
   public String wait(@RequestParam Integer id, @RequestParam String hand, Principal prin, ModelMap model) {
+    MatchInfo mInfo = new MatchInfo();
+
     model.addAttribute("login_user", prin.getName());
     User player = userMappaer.selectByName(prin.getName());
     User othUser = userMappaer.selectByid(id);
-    MatchInfo mInfo = new MatchInfo(player, othUser, hand);
+    mInfo.setAllData(player, othUser, hand);
     matchInfoMapper.insertMatchInfo(mInfo);
     return "wait.html";
   }
