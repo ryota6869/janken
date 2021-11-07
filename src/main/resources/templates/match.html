@@ -7,8 +7,13 @@
 </head>
 
 <body>
-  自分の名前：[[${login_user}]]<br>
-  相手の名前：[[${user.name}]]<br>
+  <b>
+    <font size="5">Match</font><br><br>
+  </b>
+
+  <b>
+    <font size="5">[[${login_user}]] V.S. [[${user.name}]]</font>
+  </b>
 
   <br>
   <a th:href="@{/rematch(id=${user.id},hand=Gu)}">ぐー</a>
