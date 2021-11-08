@@ -94,6 +94,7 @@ public class Lec02Controller {
         match.setAllData(player, othUser, hand, mi.getUser1Hand());
         matchMapper.insertMatch(match);
         matchingFlag = true;
+        matchInfoMapper.updateFalseIsactive(mi);
         break;
       }
     }
@@ -107,7 +108,7 @@ public class Lec02Controller {
   @GetMapping("/result")
   public SseEmitter showResult() {
     final SseEmitter sseEmitter = new SseEmitter();
-        this.acKekka.asnyShowMatchResult(sseEmitter);
-        return sseEmitter;
+    this.acKekka.asnyShowMatchResult(sseEmitter);
+    return sseEmitter;
   }
 }

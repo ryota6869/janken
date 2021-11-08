@@ -21,8 +21,13 @@ public class AsyncKekka {
   @Autowired
   MatchMapper matchMapper;
 
+  public Match syscSetFalseActiveMatch(Match match) {
+    matchMapper.updateFalseIsactive(match);
+    return match;
+  }
+
   public Match syscShowMatch() {
-    dbUpdated = true;
+
     return matchMapper.selectActiveTrueMatch();
   }
 
@@ -30,17 +35,18 @@ public class AsyncKekka {
   public void asnyShowMatchResult(SseEmitter emitter) {
     dbUpdated = true;
     try {
-      while(true){
+      while (true) {
         if (dbUpdated == false) {
-          TimeUnit.MILLISECONDS.sleep(500);
+          TimeUnit.MILLISECONDS.sleep(100);
           continue;
         }
         Match match = this.syscShowMatch();
         emitter.send(match);
         TimeUnit.MILLISECONDS.sleep(1000);
         dbUpdated = false;
+        this.syscSetFalseActiveMatch(match);
       }
-    }catch(Exception e){
+    } catch (Exception e) {
       logger.warn("Exception:" + e.getClass().getName() + ":" + e.getMessage());
     } finally {
       emitter.complete();
